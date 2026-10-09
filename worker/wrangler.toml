@@ -1,0 +1,44 @@
+# Latch dial optional service. Deploy: `npx wrangler deploy` (see worker/README.md).
+name = "latch-dial-service"
+main = "src/index.ts"
+compatibility_date = "2026-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# RPC_URL is a secret in production (`wrangler secret put RPC_URL`): the public devnet RPC
+# returns 403 "Your IP or provider is blocked" to Cloudflare Workers, so a provider URL with a
+# key is needed, and the key stays out of this file. Unset, the Worker uses the public RPC.
+# TELEGRAM_BOT_USERNAME = "<bot username>"            # public
+# TELEGRAM_WIDGET_ORIGIN = "https://tg-widget.<domain>"   # a SEPARATE hostname routed to this
+#   Worker; it serves only the widget pages ("/" and "/done"). Add it as a second custom
+#   domain / route for this Worker, and /setdomain the bot to it.
+ALLOWED_ORIGINS = "https://dial.latchlabs.org"   # comma-separated; "*" is ignored
+TEST_MINT = "2fZy4obHV2oUBqptHiANRmQU4A2vF8fTriT1mTPVLANi"   # Latch Demo Dollar (6 decimals)
+
+# Atomic checks (single-use Telegram logins, per-wallet lastIssued, faucet
+# cooldowns) run in ONE Durable Object instance — see src/guards.ts.
+[[durable_objects.bindings]]
+name = "GUARDS"
+class_name = "Guards"
+
+# Messages live in ONE Durable Object PER WALLET (strongly consistent, live
+# nudges over WebSocket) — see src/inbox.ts.
+[[durable_objects.bindings]]
+name = "INBOX"
+class_name = "Inbox"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Guards"]
+
+[[migrations]]
+tag = "v2"
+new_sqlite_classes = ["Inbox"]
+
+[[kv_namespaces]]
+binding = "KV"
+id = "4939edb2b8f8423aafeef0edad637a40"
+
+# Secrets (never in this file):
+#   npx wrangler secret put TELEGRAM_BOT_TOKEN   # from @BotFather; also /setdomain to your app's domain
+#   npx wrangler secret put FAUCET_SECRET        # contents of .secrets/test-mint-authority.json

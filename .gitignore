@@ -1,0 +1,11 @@
+node_modules
+dist
+*.local
+.env
+.env.*
+!.env.example
+test/fixtures/*.so
+*-keypair.json
+id.json
+tsconfig.tsbuildinfo
+.secrets/

@@ -1,0 +1,58 @@
+{
+  "name": "latch-dial",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Latch dial — a Telegram-style protected-payments client for the Latch protocol (Solana devnet only)",
+  "license": "BUSL-1.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b",
+    "test": "vitest run",
+    "sweep": "node scripts/sweep.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "walk": "node scripts/walk-builder.mjs",
+    "e2e": "node scripts/e2e-messages.mjs"
+  },
+  "dependencies": {
+    "@anchor-lang/core": "^1.2.0",
+    "@latch-labs/sdk": "^0.1.5",
+    "@noble/ciphers": "^2.4.0",
+    "@noble/curves": "^2.4.0",
+    "@noble/hashes": "^2.4.0",
+    "@solana/spl-token": "^0.4.15",
+    "@solana/wallet-adapter-base": "^0.9.28",
+    "@solana/wallet-adapter-phantom": "^0.9.30",
+    "@solana/wallet-adapter-react": "^0.15.40",
+    "@solana/wallet-adapter-solflare": "^0.6.34",
+    "@solana/web3.js": "^1.99.0",
+    "bn.js": "^5.2.5",
+    "buffer": "^6.0.3",
+    "canonicalize": "^5.1.0",
+    "idb-keyval": "^6.3.0",
+    "jsqr": "^1.4.0",
+    "qrcode": "^1.5.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vaul": "^1.1.2"
+  },
+  "devDependencies": {
+    "@solana/kit": "^8.4.0",
+    "@types/bn.js": "^5.2.0",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
+    "litesvm": "^1.5.0",
+    "playwright-core": "^1.63.0",
+    "typescript": "^5.9.3",
+    "vite": "^5.4.21",
+    "vitest": "^2.1.9"
+  },
+  "overrides": {
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7"
+  }
+}
